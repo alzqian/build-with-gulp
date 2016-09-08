@@ -5,7 +5,6 @@
   "main": "gulpfile.js",
   "dependencies": {
     "colors": "^1.1.2",
-    "google-closure-compiler-js": "^20160828.0.1",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-concat-css": "^2.3.0",
