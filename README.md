@@ -20,3 +20,5 @@
 `$ gulp auto`
 * entire + auto   
 `$ gulp smart`
+* 压缩图片输入与输出路径相同，会替换原文件   
+`$ gulp img-same-folder`  
