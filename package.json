@@ -1,0 +1,23 @@
+{
+  "name": "build-with-gulp",
+  "version": "1.0.0",
+  "description": "build with gulp, covering js css & images",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "google-closure-compiler-js": "^20160828.0.1",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-concat-css": "^2.3.0",
+    "gulp-imagemin": "^3.0.3",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-uglify": "^2.0.0",
+    "gulp-watch-path": "^0.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "alzqian",
+  "license": "ISC"
+}

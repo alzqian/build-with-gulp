@@ -1,0 +1,1 @@
+var now=new Date,g="...337.";
