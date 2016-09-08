@@ -50,6 +50,8 @@ Temporary Items
 /node_modules
 
 # src and dist content
+/src
+/dist
 /src/js/
 /src/css/
 /src/images/

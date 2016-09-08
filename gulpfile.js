@@ -7,6 +7,7 @@ var imagemin = require('gulp-imagemin')
 var colors = require('colors')
 var fs = require('fs')
 var paths = require('gulp-watch-path')
+//var resizer= require('gulp-image-resize')
 
 // 压缩 js 文件
 // 在命令行使用 gulp script 启动此任务
@@ -128,3 +129,28 @@ gulp.task('auto', function () {
     });
 });
 gulp.task('smart', ['entire', 'auto'])
+
+/** 
+ * 将图片压缩至当前文件夹下
+ * 行得通
+ *  */
+gulp.task('img-same-folder',function(){
+    var imgWatcher=gulp.watch('src/images/**/*',function(we){
+        if(we.type=='changed'){
+            console.log('"changed" event has been skipped.'.inverse);
+            return;
+        }
+        var imgPath=paths(we,'src/images/','src/images/');
+        gulp.src(imgPath.srcPath)
+        .pipe(imagemin({
+            progressive: true
+        }))
+        .pipe(gulp.dest(imgPath.distDir));
+        console.log('image compression finished.'.green);
+    });
+
+    imgWatcher.on('change', function (e) {
+        console.log('changes detected on image file: '.yellow + colors.cyan(e.path) + ', type "'.yellow + colors.magenta(e.type) + '" is taking over..'.yellow)
+
+    });
+});
