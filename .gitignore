@@ -48,3 +48,12 @@ Temporary Items
 
 # NPM Modules
 /node_modules
+
+# src and dist content
+/src/js/
+/src/css/
+/src/images/
+/dist/js/
+/dist/css/
+/dist/images/
+
