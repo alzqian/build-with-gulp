@@ -7,7 +7,7 @@ var imagemin = require('gulp-imagemin')
 var colors = require('colors')
 var fs = require('fs')
 var paths = require('gulp-watch-path')
-//var resizer= require('gulp-image-resize')
+var gm = require('gm').subClass({ imageMagick: true });
 
 // 压缩 js 文件
 // 在命令行使用 gulp script 启动此任务
@@ -134,18 +134,18 @@ gulp.task('smart', ['entire', 'auto'])
  * 将图片压缩至当前文件夹下
  * 行得通
  *  */
-gulp.task('img-same-folder',function(){
-    var imgWatcher=gulp.watch('src/images/**/*',function(we){
-        if(we.type=='changed'){
+gulp.task('img-same-folder', function () {
+    var imgWatcher = gulp.watch('src/images/**/*', function (we) {
+        if (we.type == 'changed') {
             console.log('"changed" event has been skipped.'.inverse);
             return;
         }
-        var imgPath=paths(we,'src/images/','src/images/');
+        var imgPath = paths(we, 'src/images/', 'src/images/');
         gulp.src(imgPath.srcPath)
-        .pipe(imagemin({
-            progressive: true
-        }))
-        .pipe(gulp.dest(imgPath.distDir));
+            .pipe(imagemin({
+                progressive: true
+            }))
+            .pipe(gulp.dest(imgPath.distDir));
         console.log('image compression finished.'.green);
     });
 
@@ -154,3 +154,46 @@ gulp.task('img-same-folder',function(){
 
     });
 });
+/** 
+ * 图片调整尺寸
+ *  */
+gulp.task('img-resize', function () {
+    var imgWatcher = gulp.watch('src/images/**/*', function (we) {
+        if (we.type == 'deleted') {
+            console.log('"deleted" event has been skipped.'.inverse);
+            return;
+        }
+        console.log(we);
+        var imgPath = paths(we, 'src/images/', 'dist/images/');
+        /*
+    paths {srcPath: 'src/file.js',
+          srcDir: 'src/',
+          distPath: 'dist/file.node',
+          distDir: 'dist/',
+          srcFilename: 'file.js',
+          distFilename: 'file.node' }
+    */
+        //var readStream = fs.createReadStream(imgPath.srcPath);
+        gm(we.path)
+            .resize(500)
+            //.gaussian(10)
+            .mosaic()
+            .write(we.path.replace('src','dist'), function (err) {
+                if (!err)
+                    console.log('image resize finished.'.green);
+                else
+                    console.log(colors.red(err));
+            })
+        /*.stream(function (err, stdout, stderr) {
+            var writeStream = fs.createWriteStream(imgPath.distPath);
+            stdout.pipe(writeStream);
+            console.log('image resize finished.'.green);
+        });*/
+    });
+
+    imgWatcher.on('change', function (e) {
+        console.log('changes detected on image file: '.yellow + colors.cyan(e.path) + ', type "'.yellow + colors.magenta(e.type) + '" is taking over..'.yellow)
+
+    });
+});
+
