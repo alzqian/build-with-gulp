@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var jslint=require('gulp-jslint');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var concatCSS = require('gulp-concat-css');
@@ -7,7 +8,7 @@ var imagemin = require('gulp-imagemin')
 var colors = require('colors')
 var fs = require('fs')
 var paths = require('gulp-watch-path')
-var gm = require('gm').subClass({ imageMagick: true });
+var gm = require('gm')//.subClass({ imageMagick: true });
 
 // 压缩 js 文件
 // 在命令行使用 gulp script 启动此任务
@@ -177,7 +178,7 @@ gulp.task('img-resize', function () {
         gm(we.path)
             .resize(500)
             //.gaussian(10)
-            .mosaic()
+            //.mosaic() //没好使
             .write(we.path.replace('src','dist'), function (err) {
                 if (!err)
                     console.log('image resize finished.'.green);
